@@ -202,3 +202,22 @@ VALUES (
         null,
         CURRENT_TIMESTAMP()
     );
+---Counter
+SELECT COUNT(*)
+FROM notification n
+    JOIN category c ON (n.category_id = c.id)
+    LEFT JOIN notification_read nr ON (nr.notification_id = n.id)
+WHERE (
+        n.user_id = 'aziz'
+        OR n.user_id IS NULL
+    )
+    AND (nr.user_id IS NULL)
+ORDER BY n.created_at DESC;
+---
+SELECT * FROM notification;
+---
+INSERT INTO notification_read (is_read, notification_id, user_id)
+VALUES (TRUE, 4, 'aziz');
+---
+INSERT INTO notification_read (is_read, notification_id, user_id)
+VALUES (TRUE, 5, 'aziz');
